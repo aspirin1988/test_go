@@ -22,9 +22,11 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 	var update conf.Update
 	json.Unmarshal(bytes, &update)
 
-	isCommand(update.Message.Text)
+	Command,Isset :=isCommand(update.Message.Text)
 
-	fmt.Println(update)
+
+
+	fmt.Println(Command,Isset)
 }
 
 func isCommand(text string)(string, bool)  {
@@ -42,7 +44,6 @@ func isCommand(text string)(string, bool)  {
 	for k, v := range Commands {
 
 		if v==text {
-			fmt.Println(k, v)
 			result = true
 			text = k
 		}
