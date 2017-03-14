@@ -5,10 +5,10 @@ const (
 	BOT_TOKEN string = "225366019:AAGDMEeCVLARyx8A5g5BAUHqjMAPjR7AFOQ"
 )
 
-var Command map[string]string
 
 
 func init() {
+	Command:= make(map[string]string)
 	Command["Start"]="/start"
 	Command["MainNews"]="Главные новости"
 	Command["LastNews"]="Последние новости"
