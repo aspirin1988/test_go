@@ -3,9 +3,9 @@ package conf
 type Update struct {
 	UpdateID int `json:"update_id"`
 	Message Message `json:"message"`
-	EditedMessage      *Message            `json:"edited_message"`
-	ChannelPost        *Message            `json:"channel_post"`
-	EditedChannelPost  *Message            `json:"edited_channel_post"`
+	EditedMessage      Message            `json:"edited_message"`
+	ChannelPost        Message            `json:"channel_post"`
+	EditedChannelPost  Message            `json:"edited_channel_post"`
 }
 
 type Message struct {
@@ -14,7 +14,7 @@ type Message struct {
 	Text string `json:"text"`
 	From User `json:"from"`
 	Chat User `json:"chat"`
-	Photo *[]PhotoSize     `json:"photo"`
+	Photo []PhotoSize     `json:"photo"`
 	Entities []Entities `json:"entities"`
 }
 
