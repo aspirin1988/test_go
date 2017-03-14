@@ -22,13 +22,14 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 	var update conf.Update
 	json.Unmarshal(bytes, &update)
 
-	isCommand()
+	isCommand(update.Message.Text)
 
 	fmt.Println(update)
 }
 
-func isCommand()(bool)  {
+func isCommand(text string)(string, bool)  {
 
+	var result bool = false
 	Commands:= make(map[string]string)
 	Commands["Start"]="/start"
 	Commands["MainNews"]="Главные новости"
@@ -39,10 +40,15 @@ func isCommand()(bool)  {
 	Commands["Opinions"]="Блоги и мнения"
 
 	for k, v := range Commands {
-		fmt.Println(k,v)
+
+		if v==text {
+			fmt.Println(k, v)
+			result = true
+			text = k
+		}
 	}
-	var result bool = true
-	return result
+
+	return text,result
 
 }
 
