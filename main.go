@@ -21,6 +21,8 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 
 	var update conf.Update
 	json.Unmarshal(bytes, &update)
-
+	for k, v := range conf.Command {
+		fmt.Println(k,v)
+	}
 	fmt.Println(update)
 }
