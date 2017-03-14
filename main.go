@@ -2,10 +2,10 @@ package main
 
 import (
 	"./conf"
-	"fmt"
 	"encoding/json"
 	"net/http"
 	"io/ioutil"
+	"fmt"
 )
 
 func main() {
@@ -21,8 +21,30 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 
 	var update conf.Update
 	json.Unmarshal(bytes, &update)
-	for k, v := range conf.Command {
-		fmt.Println(k,v)
-	}
+
+	isCommand()
+
 	fmt.Println(update)
 }
+
+func isCommand()(bool)  {
+
+	Commands:= make(map[string]string)
+	Commands["Start"]="/start"
+	Commands["MainNews"]="Главные новости"
+	Commands["LastNews"]="Последние новости"
+	Commands["News"]="Новости"
+	Commands["Article"]="Статьи"
+	Commands["OpinionBatle"]="Битва мнений"
+	Commands["Opinions"]="Блоги и мнения"
+
+	for k, v := range Commands {
+		fmt.Println(k,v)
+	}
+	var result bool = true
+	return result
+
+}
+
+
+

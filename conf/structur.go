@@ -37,3 +37,4 @@ type Entities struct {
 	Offset int `json:"offset"`
 	Type string `json:"type"`
 }
+
