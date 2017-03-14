@@ -25,6 +25,8 @@ func main() {
 
 func parseMessage(rw http.ResponseWriter, request *http.Request){
 
+	fmt.Println("test")
+
 	bytes, _ := ioutil.ReadAll(request.Body)
 
 	var update conf.Update
