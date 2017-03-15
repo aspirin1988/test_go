@@ -92,7 +92,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
-			go sendMessage(&args)
+			go sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -115,7 +115,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update}
-			sendMessage(&args)
+			sendMessage(args)
 
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -125,7 +125,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -134,7 +134,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"news"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -143,7 +143,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -152,7 +152,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -161,7 +161,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -170,7 +170,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -179,7 +179,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -188,7 +188,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -197,7 +197,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -206,7 +206,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			LastCommand := GetCommand(update)
 			var args = map[string]interface{}{"user":update,"menu":conf.Back[LastCommand]}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", conf.Back[LastCommand])
 			fmt.Println("CurrentCommand:", LastCommand)
 		}
@@ -237,7 +237,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -246,7 +246,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -255,7 +255,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -264,7 +264,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -273,7 +273,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(&args)
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -312,7 +312,6 @@ func getMethod (Command string)func(update conf.Update){
 }
 
 func sendMessage(args map[string]interface{})  {
-
 
 	user := args["user"].(conf.Update)
 
