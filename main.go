@@ -39,14 +39,34 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 func isCommand(text string)(string, bool)  {
 
 	var result bool = false
-	Commands:= make(map[string]string)
-	Commands["Start"]="/start"
-	Commands["MainNews"]="Главные новости"
-	Commands["LastNews"]="Последние новости"
-	Commands["News"]="Новости"
-	Commands["Article"]="Статьи"
-	Commands["OpinionBatle"]="Битва мнений"
-	Commands["Opinions"]="Блоги и мнения"
+
+	Commands := map[string]string{
+		"start"          : "/start",
+		"help"           : "/help",
+		"menu"           : "Ⓜ️Меню",
+		"mainNews"       : "Главные новости",
+		"news"           : "Новости",
+		"economic"       : "Экономика",
+		"accidents"      : "Происшествия",
+		"sports"         : "Спорт в Казахстане",
+		"tech"           : "Технологии",
+		"life"           : "Жизнь",
+		"culture"        : "Культура",
+		"lastNews"       : "Последние новости",
+		"articles"       : "Статьи",
+		"back"           : "Назад",
+		"showMor"        : "Показать еще",
+		"showPrev"       : "Показать предыдущую",
+		"clearCache"     : "Очистить",
+		"battleopinions" : "Битва мнений",
+		"opinion"        : "Блоги и мнения",
+		"promises"       : "Обещания",
+		"conference"     : "Интервью",
+		"fotoarchive"    : "Фотогалерея",
+		"userlist"       : "Список пользователей",
+		"subscribe"      : "Подписаться на рассылку",
+		"unsubscribe"    : "Подписаться на рассылку✔️",
+	}
 
 
 	for k, v := range Commands {
@@ -66,16 +86,185 @@ func getMethod (Command string)func(update conf.Update){
 
 	NewMethod:= func(update conf.Update) {}
 	switch Command {
-	case "Start":
+	case "start":
 		NewMethod = func(update conf.Update) {
-			setCommand(update,Command)
-			fmt.Println("CurrentCommand:",Command)
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
 		}
+		break
+
+	case "help":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "menu":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "mainNews":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "news":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "economic":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "accidents":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "sports":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "tech":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "life":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "culture":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "lastNews":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "articles":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "back":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "showMor":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "showPrev":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "clearCache":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "battleopinions":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "opinion":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "promises":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "conference":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "fotoarchive":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "userlist":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "subscribe":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
+	case "unsubscribe":
+		NewMethod = func(update conf.Update) {
+			setCommand(update, Command)
+			fmt.Println("CurrentCommand:", Command)
+		}
+		break
+
 	default:
 		NewMethod = func(update conf.Update) {
-			var val = GetCommand(update)
-			fmt.Println("LastCommand:",val)
-
+			var val= GetCommand(update)
+			fmt.Println("LastCommand:", val)
 		}
 
 	}
