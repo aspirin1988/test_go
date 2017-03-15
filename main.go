@@ -287,11 +287,13 @@ func sendMessage( args... interface{} )  {
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
 
-	if args[1]!=nil {
-		MenuName := args[1].(string)
-		menu, _ := json.Marshal(getMenu(MenuName))
-		form.Add("reply_markup", string(menu) )
-	}
+	fmt.Println(args[1])
+
+	//if args[1]!=nil {
+	//	MenuName := args[1].(string)
+	//	menu, _ := json.Marshal(getMenu(MenuName))
+	//	form.Add("reply_markup", string(menu) )
+	//}
 
 
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
