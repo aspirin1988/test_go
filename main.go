@@ -283,7 +283,9 @@ func sendMessage( user conf.Update)  {
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
 
-	keyboard :=NewKeyboardButtonRow(NewKeyboardButton("Главные новости"),NewKeyboardButton("test"),NewKeyboardButton("test"))
+	row :=NewKeyboardButtonRow(NewKeyboardButton("Главные новости"),NewKeyboardButton("test"),NewKeyboardButton("test"))
+
+	keyboard:= NewReplyKeyboard(row)
 
 	fmt.Println(keyboard)
 
