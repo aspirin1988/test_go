@@ -113,7 +113,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "mainNews":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			sendMessage(update,"main_menu")
+			sendMessage(update,"")
 
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -315,27 +315,6 @@ func GetCommand(UserID conf.Update)(string)  {
 func NewKeyboardButton(text string) conf.KeyboardButton {
 	return conf.KeyboardButton{
 		Text: text,
-	}
-}
-
-// NewKeyboardButtonRow creates a row of keyboard buttons.
-func NewKeyboardButtonRow(buttons ...conf.KeyboardButton) []conf.KeyboardButton {
-	var row []conf.KeyboardButton
-
-	row = append(row, buttons...)
-
-	return row
-}
-
-// NewReplyKeyboard creates a new regular keyboard with sane defaults.
-func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
-	var keyboard [][]conf.KeyboardButton
-
-	keyboard = append(keyboard, rows...)
-
-	return conf.ReplyKeyboardMarkup{
-		ResizeKeyboard: true,
-		Keyboard:       keyboard,
 	}
 }
 
