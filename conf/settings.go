@@ -29,15 +29,19 @@ var Menu = map[string][][]string{
 }
 
 var Back = map[string]string{
-	"articles"  : "main_menu",
-	"menu"      : "main_menu",
-	"news"      : "main_menu",
-	"economic"  : "news",
-	"accidents" : "news",
-	"sports"    : "news",
-	"tech"      : "news",
-	"life"      : "news",
-	"culture"   : "news",
+	"articles":       "main_menu",
+	"battleopinions": "main_menu",
+	"opinion":        "main_menu",
+	"promises":       "main_menu",
+	"conference":     "main_menu",
+	"fotoarchive":    "main_menu",
+	"news":           "main_menu",
+	"economic":       "news",
+	"accidents":      "news",
+	"sports":         "news",
+	"tech":           "news",
+	"life":           "news",
+	"culture":        "news",
 }
 
 func init() {
