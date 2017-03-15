@@ -75,7 +75,7 @@ func getMethod (Command string)func(update conf.Update){
 	switch Command {
 	case "Start":
 		NewMethod = func(update conf.Update) {
-			var Operations = map[int]string{ update.Message.From.ID:Command}
+			var Operations = map[int]map[string]string{ update.Message.From.ID:{"CurrentCommand":Command}}
 
 			fmt.Println(update.Message.From.ID)
 			fmt.Println(Operations)
