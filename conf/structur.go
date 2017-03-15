@@ -38,3 +38,15 @@ type Entities struct {
 	Type string `json:"type"`
 }
 
+type ReplyKeyboardMarkup struct {
+	Keyboard        [][]KeyboardButton `json:"keyboard"`
+	ResizeKeyboard  bool               `json:"resize_keyboard"`   // optional
+	OneTimeKeyboard bool               `json:"one_time_keyboard"` // optional
+	Selective       bool               `json:"selective"`         // optional
+}
+
+type KeyboardButton struct {
+	Text            string `json:"text"`
+	RequestContact  bool   `json:"request_contact"`
+	RequestLocation bool   `json:"request_location"`
+}

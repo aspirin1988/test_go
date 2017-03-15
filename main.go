@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"net/url"
 	"bytes"
+	"github.com/Syfaro/telegram-bot-api"
 )
 
 
@@ -283,6 +284,10 @@ func sendMessage( user conf.Update)  {
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
 
+	keyboard :=NewKeyboardButtonRow(NewKeyboardButton("Главные новости"),NewKeyboardButton("test"),NewKeyboardButton("test"))
+
+	fmt.Println(keyboard)
+
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	defer req.Body.Close()
@@ -305,5 +310,32 @@ func GetCommand(UserID conf.Update)(string)  {
 	return result
 }
 
+
+func NewKeyboardButton(text string) conf.KeyboardButton {
+	return conf.KeyboardButton{
+		Text: text,
+	}
+}
+
+// NewKeyboardButtonRow creates a row of keyboard buttons.
+func NewKeyboardButtonRow(buttons ...conf.KeyboardButton) []conf.KeyboardButton {
+	var row []conf.KeyboardButton
+
+	row = append(row, buttons...)
+
+	return row
+}
+
+// NewReplyKeyboard creates a new regular keyboard with sane defaults.
+func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
+	var keyboard [][]conf.KeyboardButton
+
+	keyboard = append(keyboard, rows...)
+
+	return conf.ReplyKeyboardMarkup{
+		ResizeKeyboard: true,
+		Keyboard:       keyboard,
+	}
+}
 
 
