@@ -294,7 +294,7 @@ func sendMessage(args map[string]interface{})  {
 	form.Add("text", user.Message.Text)
 
 	if args["menu"]!=nil {
-		MenuName := args[1].(string)
+		MenuName := args["menu"].(string)
 		menu, _ := json.Marshal(getMenu(MenuName))
 		form.Add("reply_markup", string(menu) )
 	}
