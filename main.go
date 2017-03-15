@@ -91,7 +91,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			getMenu("main_menu")
+			sendMessage(update,"main_menu")
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -285,15 +285,8 @@ func sendMessage( user conf.Update, MenuName string)  {
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
 
-	getMenu(MenuName)
-
-	row :=NewKeyboardButtonRow(NewKeyboardButton("Главные новости"),NewKeyboardButton("test"),NewKeyboardButton("test"))
-
-	keyboard:= NewReplyKeyboard(row)
-
-	fmt.Println(keyboard)
-	json1,_ := json.Marshal(keyboard)
-	form.Add("reply_markup", string(json1) )
+	menu,_ := json.Marshal(getMenu(MenuName))
+	form.Add("reply_markup", string(menu) )
 
 
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
@@ -346,13 +339,21 @@ func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
 	}
 }
 
-func getMenu(MenuName string)  {
+func getMenu(MenuName string) conf.ReplyKeyboardMarkup  {
 
+	var rows[]conf.KeyboardButton
+	var keyboard [][]conf.KeyboardButton
 	menu :=conf.Menu[MenuName]
 	for _,row := range menu {
 		for _,cel := range row {
-			fmt.Println(cel)
+			rows = append(rows, NewKeyboardButton(cel))
+
 		}
+		keyboard = append(keyboard, rows)
+	}
+	return conf.ReplyKeyboardMarkup{
+		ResizeKeyboard: true,
+		Keyboard:       keyboard,
 	}
 }
 
