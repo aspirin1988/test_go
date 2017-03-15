@@ -113,7 +113,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "mainNews":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			sendMessage(update,"")
+			sendMessage(update)
 
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -278,15 +278,20 @@ func getMethod (Command string)func(update conf.Update){
 
 }
 
-func sendMessage( user conf.Update, MenuName string)  {
+func sendMessage( args... interface{} )  {
+
+	user := conf.Update(args[0])
 
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
 
-	menu,_ := json.Marshal(getMenu(MenuName))
-	form.Add("reply_markup", string(menu) )
+	if args[1] {
+		MenuName := string(args[1])
+		menu, _ := json.Marshal(getMenu(MenuName))
+		form.Add("reply_markup", string(menu) )
+	}
 
 
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
