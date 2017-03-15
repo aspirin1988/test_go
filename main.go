@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"net/url"
 	"bytes"
-	"github.com/Syfaro/telegram-bot-api"
 )
 
 
