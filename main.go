@@ -63,19 +63,18 @@ func isCommand(text string)(string, bool)  {
 
 func getMethod (Command string)func(update conf.Update){
 
-	mc := memcache.New("127.0.0.1:11211")
 
 	NewMethod:= func(update conf.Update) {}
 	switch Command {
 	case "Start":
 		NewMethod = func(update conf.Update) {
-			mc.Set(&memcache.Item{Key:strconv.Itoa(update.Message.From.ID),Value:[]byte(Command)})
+			setCommand(update,Command)
 			fmt.Println("CurrentCommand:",Command)
 		}
 	default:
 		NewMethod = func(update conf.Update) {
-			val, _ := mc.Get(strconv.Itoa(update.Message.From.ID))
-			fmt.Println("LastCommand:",string(val.Value))
+			var val = GetCommand(update)
+			fmt.Println("LastCommand:",val)
 
 		}
 
@@ -83,6 +82,18 @@ func getMethod (Command string)func(update conf.Update){
 
 	return NewMethod
 
+}
+
+func setCommand(UserID conf.Update, Command string)  {
+	mc := memcache.New("127.0.0.1:11211")
+	mc.Set(&memcache.Item{Key:strconv.Itoa(UserID.Message.From.ID),Value:[]byte(Command)})
+}
+
+func GetCommand(UserID conf.Update)(string)  {
+	mc := memcache.New("127.0.0.1:11211")
+	val, _ := mc.Get(strconv.Itoa(UserID.Message.From.ID))
+	var result = string(val.Value)
+	return result
 }
 
 
