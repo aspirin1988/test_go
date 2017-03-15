@@ -8,6 +8,9 @@ import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"strconv"
+	"net/url"
+	"bytes"
+	"os/user"
 )
 
 
@@ -110,6 +113,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "mainNews":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
+			sendMessage(update)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -271,6 +275,23 @@ func getMethod (Command string)func(update conf.Update){
 
 	return NewMethod
 
+}
+
+func sendMessage( user conf.Update)  {
+
+	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
+	form := url.Values{}
+	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
+	form.Add("text", user.Message.Text)
+
+	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	defer req.Body.Close()
+
+	//Отправка сообщения
+	client := &http.Client{}
+	resp, _ := client.Do(req)
+	fmt.Println(resp.Status)
 }
 
 func setCommand(UserID conf.Update, Command string)  {
