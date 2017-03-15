@@ -280,7 +280,7 @@ func getMethod (Command string)func(update conf.Update){
 
 func sendMessage( args... interface{} )  {
 
-	user := conf.Update(args[0])
+	user := args[0].(conf.Update)
 
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
@@ -288,7 +288,7 @@ func sendMessage( args... interface{} )  {
 	form.Add("text", user.Message.Text)
 
 	if args[1] {
-		MenuName := string(args[1])
+		MenuName := args[1].(string)
 		menu, _ := json.Marshal(getMenu(MenuName))
 		form.Add("reply_markup", string(menu) )
 	}
