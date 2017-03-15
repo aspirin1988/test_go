@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"net/url"
 	"bytes"
-	"os/user"
 )
 
 
