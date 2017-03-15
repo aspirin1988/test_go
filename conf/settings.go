@@ -17,7 +17,6 @@ var Menu = map[string][][]string{
 	},
 	"single": {
 		{"⏮Предыдущая","Следующая⏭"},
-		{"Новости"},
 		{"Подписаться на рассылку"},
 		{"Назад"},
 	},
@@ -27,6 +26,18 @@ var Menu = map[string][][]string{
 		{"Подписаться на рассылку"},
 		{"Назад"},
 	},
+}
+
+var Back = map[string]string{
+	"articles"  : "menu",
+	"menu"      : "menu",
+	"news"      : "menu",
+	"economic"  : "news",
+	"accidents" : "news",
+	"sports"    : "news",
+	"tech"      : "news",
+	"life"      : "news",
+	"culture"   : "news",
 }
 
 func init() {

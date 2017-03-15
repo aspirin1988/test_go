@@ -188,8 +188,10 @@ func getMethod (Command string)func(update conf.Update){
 
 	case "back":
 		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			fmt.Println("CurrentCommand:", Command)
+			LastCommand := GetCommand(update)
+
+			fmt.Println("CurrentCommand:", conf.Back[LastCommand])
+			fmt.Println("CurrentCommand:", LastCommand)
 		}
 		break
 
