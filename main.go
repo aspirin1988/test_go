@@ -349,7 +349,7 @@ func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
 func getMenu(MenuName string)  {
 
 	menu :=conf.Menu[MenuName]
-	for row := range menu {
+	for _,row := range menu {
 		fmt.Println(row)
 	}
 }
