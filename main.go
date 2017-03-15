@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"strconv"
-	//"net/url"
-	//"bytes"
+	"net/url"
+	"bytes"
 )
 
 
@@ -91,7 +91,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			var f = map[string]interface{}{"user":update,"menu":"main_menu"}
+			var f = map[string]interface{}{"user":update}
 			sendMessage(f)
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -286,30 +286,28 @@ func sendMessage(args map[string]interface{})  {
 		fmt.Println(v,k)
 	}
 
-	//user := args[0].(conf.Update)
-	//
-	//method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
-	//form := url.Values{}
-	//form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
-	//form.Add("text", user.Message.Text)
-	//
-	//fmt.Println(args[1])
-	//
-	//if args[1]!=nil {
-	//	MenuName := args[1].(string)
-	//	menu, _ := json.Marshal(getMenu(MenuName))
-	//	form.Add("reply_markup", string(menu) )
-	//}
-	//
-	//
-	//req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
-	//req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	//defer req.Body.Close()
-	//
-	////Отправка сообщения
-	//client := &http.Client{}
-	//resp, _ := client.Do(req)
-	//fmt.Println(resp.Status)
+	user := args["user"].(conf.Update)
+
+	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
+	form := url.Values{}
+	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
+	form.Add("text", user.Message.Text)
+
+	if args["menu"]!=nil {
+		MenuName := args[1].(string)
+		menu, _ := json.Marshal(getMenu(MenuName))
+		form.Add("reply_markup", string(menu) )
+	}
+
+
+	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	defer req.Body.Close()
+
+	//Отправка сообщения
+	client := &http.Client{}
+	resp, _ := client.Do(req)
+	fmt.Println(resp.Status)
 }
 
 func setCommand(UserID conf.Update, Command string)  {
