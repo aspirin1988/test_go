@@ -26,7 +26,7 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 
 	if Isset{
 		Command:=getMethod(Command)
-		Command()
+		Command(update)
 	}
 
 
@@ -58,17 +58,17 @@ func isCommand(text string)(string, bool)  {
 
 }
 
-func getMethod (Command string)func(){
+func getMethod (Command string)func(update conf.Update){
 
-	NewMethod:= func() {}
+	NewMethod:= func(update conf.Update) {}
 	switch Command {
 	case "Start":
-		NewMethod = func() {
-			fmt.Println("Start")
+		NewMethod = func(update conf.Update) {
+			fmt.Println(update.Message.From.ID)
 		}
 	default:
-		NewMethod = func() {
-			fmt.Println("Default")
+		NewMethod = func(update conf.Update) {
+			fmt.Println(update.Message.Text)
 		}
 
 	}
