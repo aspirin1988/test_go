@@ -311,17 +311,17 @@ func getMethod (Command string)func(update conf.Update){
 
 }
 
-func sendMessage(args *map[string]interface{})  {
+func sendMessage(args map[string]interface{})  {
 
 
-	user := &args["user"].(conf.Update)
+	user := args["user"].(conf.Update)
 
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
 
-	if &args["menu"]!=nil {
+	if args["menu"]!=nil {
 		MenuName := args["menu"].(string)
 		menu, _ := json.Marshal(getMenu(MenuName))
 		form.Add("reply_markup", string(menu) )
