@@ -6,19 +6,12 @@ import (
 	"net/http"
 	"io/ioutil"
 	"fmt"
+	"github.com/bradfitz/gomemcache/memcache"
+	"strconv"
 )
 
-var Operations *map[int]struct{
-	LastCommand,CurrentCommand string
-}
-
-//func init() {
-//	Operation :=make(map[int]struct{LastCommand,CurrentCommand string})
-//	Operations = Operation
-//}
 
 func main() {
-
 
 	http.HandleFunc("/", parseMessage)
 	http.ListenAndServe(":88", nil)
@@ -70,18 +63,19 @@ func isCommand(text string)(string, bool)  {
 
 func getMethod (Command string)func(update conf.Update){
 
+	mc := memcache.New("127.0.0.1:11211")
 
 	NewMethod:= func(update conf.Update) {}
 	switch Command {
 	case "Start":
 		NewMethod = func(update conf.Update) {
-			var Operations = map[int]map[string]string{ update.Message.From.ID:{"CurrentCommand":Command}}
-
+			mc.Set(&memcache.Item{Key:strconv.Itoa(update.Message.From.ID),Value:[]byte(Command)})
 			fmt.Println(update.Message.From.ID)
-			fmt.Println(Operations)
 		}
 	default:
 		NewMethod = func(update conf.Update) {
+			val, err := mc.Get(strconv.Itoa(update.Message.From.ID))
+			fmt.Println(val,err)
 			fmt.Println(update.Message.Text)
 		}
 
