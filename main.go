@@ -33,7 +33,7 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 	}
 
 
-	fmt.Println(Command,Isset)
+	//fmt.Println(Command,Isset)
 }
 
 func isCommand(text string)(string, bool)  {
@@ -70,13 +70,13 @@ func getMethod (Command string)func(update conf.Update){
 	case "Start":
 		NewMethod = func(update conf.Update) {
 			mc.Set(&memcache.Item{Key:strconv.Itoa(update.Message.From.ID),Value:[]byte(Command)})
-			fmt.Println(update.Message.From.ID)
+			fmt.Println("CurrentCommand:",Command)
 		}
 	default:
 		NewMethod = func(update conf.Update) {
 			val, _ := mc.Get(strconv.Itoa(update.Message.From.ID))
-			fmt.Println(string(val.Value))
-			fmt.Println(update.Message.Text)
+			fmt.Println("LastCommand:",string(val.Value))
+
 		}
 
 	}
