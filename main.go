@@ -333,7 +333,7 @@ func sendMessage(args map[string]interface{})  {
 
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	defer req.Body.Close()
+	req.Body.Close()
 
 	//Отправка сообщения
 	client := &http.Client{}
