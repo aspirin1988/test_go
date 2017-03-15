@@ -29,9 +29,9 @@ var Menu = map[string][][]string{
 }
 
 var Back = map[string]string{
-	"articles"  : "menu",
-	"menu"      : "menu",
-	"news"      : "menu",
+	"articles"  : "main_menu",
+	"menu"      : "main_menu",
+	"news"      : "main_menu",
 	"economic"  : "news",
 	"accidents" : "news",
 	"sports"    : "news",
