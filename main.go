@@ -57,8 +57,8 @@ func isCommand(text string)(string, bool)  {
 		"lastNews"       : "Последние новости",
 		"articles"       : "Статьи",
 		"back"           : "Назад",
-		"showMor"        : "Показать еще",
-		"showPrev"       : "Показать предыдущую",
+		"showMor"        : "Следующая⏭",
+		"showPrev"       : "⏮Предыдущая",
 		"clearCache"     : "Очистить",
 		"battleopinions" : "Битва мнений",
 		"opinion"        : "Блоги и мнения",
@@ -91,6 +91,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
+			getMenu("main_nemu")
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -342,4 +343,9 @@ func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
 	}
 }
 
+func getMenu(MenuName string)  {
+
+	menu :=conf.Menu[MenuName]
+	fmt.Println(menu)
+}
 
