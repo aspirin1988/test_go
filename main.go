@@ -341,10 +341,10 @@ func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
 
 func getMenu(MenuName string) conf.ReplyKeyboardMarkup  {
 
-	var rows[]conf.KeyboardButton
-	var keyboard [][]conf.KeyboardButton
 	menu :=conf.Menu[MenuName]
+	var keyboard [][]conf.KeyboardButton
 	for _,row := range menu {
+		var rows[]conf.KeyboardButton
 		for _,cel := range row {
 			rows = append(rows, NewKeyboardButton(cel))
 
