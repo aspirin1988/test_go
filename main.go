@@ -91,8 +91,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			var f = map[string]interface{}{"user":update,"menu":"main_menu"}
-			sendMessage(f)
+			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -114,8 +114,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "mainNews":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			var f = map[string]interface{}{"user":update}
-			sendMessage(f)
+			var args = map[string]interface{}{"user":update}
+			sendMessage(args)
 
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -180,6 +180,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "articles":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
+			var args = map[string]interface{}{"user":update,"menu":"single"}
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
