@@ -24,6 +24,10 @@ func parseMessage(rw http.ResponseWriter, request *http.Request){
 
 	Command,Isset :=isCommand(update.Message.Text)
 
+	if Isset{
+		Command:=getMethod(Command)
+		Command()
+	}
 
 
 	fmt.Println(Command,Isset)
@@ -41,6 +45,7 @@ func isCommand(text string)(string, bool)  {
 	Commands["OpinionBatle"]="Битва мнений"
 	Commands["Opinions"]="Блоги и мнения"
 
+
 	for k, v := range Commands {
 
 		if v==text {
@@ -50,6 +55,25 @@ func isCommand(text string)(string, bool)  {
 	}
 
 	return text,result
+
+}
+
+func getMethod (Command string)func(){
+
+	NewMethod:= func() {}
+	switch Command {
+	case "Start":
+		NewMethod = func() {
+			fmt.Println("Start")
+		}
+	default:
+		NewMethod = func() {
+			fmt.Println("Default")
+		}
+
+	}
+
+	return NewMethod
 
 }
 
