@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"strconv"
-	"net/url"
-	"bytes"
+	//"net/url"
+	//"bytes"
 )
 
 
@@ -91,7 +91,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			sendMessage(update,"main_menu")
+			var f = map[string]interface{}{"user":update,"menu":"main_menu"}
+			sendMessage(f)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -113,7 +114,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "mainNews":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			sendMessage(update)
+			var f = map[string]interface{}{"user":update,"menu":"main_menu"}
+			sendMessage(f)
 
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -278,32 +280,36 @@ func getMethod (Command string)func(update conf.Update){
 
 }
 
-func sendMessage( args... interface{} )  {
+func sendMessage(args map[string]interface{})  {
 
-	user := args[0].(conf.Update)
+	for v,k :=range args{
+		fmt.Println(v,k)
+	}
 
-	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
-	form := url.Values{}
-	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
-	form.Add("text", user.Message.Text)
-
-	fmt.Println(args[1])
-
+	//user := args[0].(conf.Update)
+	//
+	//method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
+	//form := url.Values{}
+	//form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
+	//form.Add("text", user.Message.Text)
+	//
+	//fmt.Println(args[1])
+	//
 	//if args[1]!=nil {
 	//	MenuName := args[1].(string)
 	//	menu, _ := json.Marshal(getMenu(MenuName))
 	//	form.Add("reply_markup", string(menu) )
 	//}
-
-
-	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	defer req.Body.Close()
-
-	//Отправка сообщения
-	client := &http.Client{}
-	resp, _ := client.Do(req)
-	fmt.Println(resp.Status)
+	//
+	//
+	//req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
+	//req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	//defer req.Body.Close()
+	//
+	////Отправка сообщения
+	//client := &http.Client{}
+	//resp, _ := client.Do(req)
+	//fmt.Println(resp.Status)
 }
 
 func setCommand(UserID conf.Update, Command string)  {
