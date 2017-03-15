@@ -91,7 +91,7 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			getMenu("main_nemu")
+			getMenu("main_menu")
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
