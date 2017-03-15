@@ -350,7 +350,9 @@ func getMenu(MenuName string)  {
 
 	menu :=conf.Menu[MenuName]
 	for _,row := range menu {
-		fmt.Println(row)
+		for _,cel := range row {
+			fmt.Println(cel)
+		}
 	}
 }
 
