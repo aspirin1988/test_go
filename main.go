@@ -113,7 +113,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "mainNews":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			sendMessage(update)
+			sendMessage(update,"main_menu")
+
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -277,12 +278,14 @@ func getMethod (Command string)func(update conf.Update){
 
 }
 
-func sendMessage( user conf.Update)  {
+func sendMessage( user conf.Update, MenuName string)  {
 
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("text", user.Message.Text)
+
+	getMenu(MenuName)
 
 	row :=NewKeyboardButtonRow(NewKeyboardButton("Главные новости"),NewKeyboardButton("test"),NewKeyboardButton("test"))
 
@@ -346,6 +349,8 @@ func NewReplyKeyboard(rows ...[]conf.KeyboardButton) conf.ReplyKeyboardMarkup {
 func getMenu(MenuName string)  {
 
 	menu :=conf.Menu[MenuName]
-	fmt.Println(menu)
+	for v,k := range menu {
+		fmt.Println(v,k)
+	}
 }
 
