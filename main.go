@@ -189,7 +189,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "back":
 		NewMethod = func(update conf.Update) {
 			LastCommand := GetCommand(update)
-
+			var args = map[string]interface{}{"user":update,"menu":conf.Back[LastCommand]}
+			sendMessage(args)
 			fmt.Println("CurrentCommand:", conf.Back[LastCommand])
 			fmt.Println("CurrentCommand:", LastCommand)
 		}
