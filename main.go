@@ -288,6 +288,9 @@ func sendMessage( user conf.Update)  {
 	keyboard:= NewReplyKeyboard(row)
 
 	fmt.Println(keyboard)
+	json1,_ := json.Marshal(keyboard)
+	form.Add("reply_markup", string(json1) )
+
 
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
