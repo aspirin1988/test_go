@@ -74,8 +74,8 @@ func getMethod (Command string)func(update conf.Update){
 		}
 	default:
 		NewMethod = func(update conf.Update) {
-			val, err := mc.Get(strconv.Itoa(update.Message.From.ID))
-			fmt.Println(val,err)
+			val, _ := mc.Get(strconv.Itoa(update.Message.From.ID))
+			fmt.Println(string(val.Value))
 			fmt.Println(update.Message.Text)
 		}
 
