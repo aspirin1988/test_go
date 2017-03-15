@@ -8,7 +8,17 @@ import (
 	"fmt"
 )
 
+var Operations *map[int]struct{
+	LastCommand,CurrentCommand string
+}
+
+//func init() {
+//	Operation :=make(map[int]struct{LastCommand,CurrentCommand string})
+//	Operations = Operation
+//}
+
 func main() {
+
 
 	http.HandleFunc("/", parseMessage)
 	http.ListenAndServe(":88", nil)
@@ -60,11 +70,15 @@ func isCommand(text string)(string, bool)  {
 
 func getMethod (Command string)func(update conf.Update){
 
+
 	NewMethod:= func(update conf.Update) {}
 	switch Command {
 	case "Start":
 		NewMethod = func(update conf.Update) {
+			var Operations = map[int]string{ update.Message.From.ID:Command}
+
 			fmt.Println(update.Message.From.ID)
+			fmt.Println(Operations)
 		}
 	default:
 		NewMethod = func(update conf.Update) {
