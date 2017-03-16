@@ -24,6 +24,8 @@ func init() {
 	db, err = sql.Open("mysql","tengrinews:vfzq2sE8hKzNqkkLyar6@/tengrinews")
 	if err != nil {
 		panic(err.Error())
+	}else {
+		fmt.Println("OK!")
 	}
 	// sql.DB should be long lived "defer" closes it once this function ends
 	defer db.Close()
