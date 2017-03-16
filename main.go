@@ -51,7 +51,7 @@ func isCommand(text string)(string, bool)  {
 		"news"           : "Новости",
 		"economic"       : "Экономика",
 		"accidents"      : "Происшествия",
-		"sports"         : "Спорт в Казахстане",
+		"sports"         : "Спорт",
 		"tech"           : "Технологии",
 		"life"           : "Жизнь",
 		"culture"        : "Культура",
