@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"net/url"
 	"bytes"
+	"time"
 )
 
 
@@ -90,10 +91,13 @@ func getMethod (Command string)func(update conf.Update){
 	switch Command {
 	case "start":
 		NewMethod = func(update conf.Update) {
+			fmt.Println(time.Now())
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
 			go sendMessage1(args)
 			fmt.Println("CurrentCommand:", Command)
+			fmt.Println(time.Now())
+
 		}
 		break
 
