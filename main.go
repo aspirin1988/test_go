@@ -445,7 +445,7 @@ func incOffest(UserID conf.Update,Command string) (int) {
 		result,_ = strconv.Atoi(string(val.Value))
 		result++
 	}
-	mc.Set(&memcache.Item{Key:key,Value:[]byte(result)})
+	mc.Set(&memcache.Item{Key:key,Value:[]byte(strconv.Itoa(result))})
 	return result
 
 
@@ -463,7 +463,7 @@ func decOffset(UserID conf.Update,Command string) (int) {
 			result--
 		}
 	}
-	mc.Set(&memcache.Item{Key:key,Value:[]byte(result)})
+	mc.Set(&memcache.Item{Key:key,Value:[]byte(strconv.Itoa(result))})
 	return result
 }
 
