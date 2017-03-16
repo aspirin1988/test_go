@@ -383,10 +383,10 @@ func sendMessage1(args map[string]interface{})  {
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
-	if args["menu"]==nil {
+	if args["text"]==nil {
 		form.Add("text", user.Message.Text)
 	}else{
-		form.Add("text", args["menu"].(string))
+		form.Add("text", args["text"].(string))
 	}
 
 	if args["menu"]!=nil {
