@@ -443,7 +443,7 @@ func getMenu(MenuName string) conf.ReplyKeyboardMarkup  {
 }
 
 func getNews(offset int,count int)  {
-	var sql string = "SELECT id,header,publish_date as `date` FROM news limit "+strconv.Itoa(count)+" offset "+strconv.Itoa(offset)
+	var sql string = "SELECT id,header,publish_date as `date` FROM news ORDER BY publish_date DESC limit "+strconv.Itoa(count)+" offset "+strconv.Itoa(offset)
 	fmt.Println(sql)
 	res, err :=db.Query(sql)
 	if err != nil {
