@@ -19,11 +19,9 @@ import (
 
 var db *sql.DB
 var err error
-var mc memcache.Client
+//var mc memcache.Client
 
 func init() {
-
-	&mc = memcache.New("127.0.0.1:11211")
 
 	db, err = sql.Open("mysql","tengrinews:vfzq2sE8hKzNqkkLyar6@/tengrinews")
 	if err != nil {
@@ -423,11 +421,13 @@ func sendMessage(args map[string]interface{})  {
 }
 
 func setCommand(UserID conf.Update, Command string)  {
+	mc := memcache.New("127.0.0.1:11211")
 	var key string = strconv.Itoa(UserID.Message.From.ID)
 	mc.Set(&memcache.Item{Key:key,Value:[]byte(Command)})
 }
 
 func GetCommand(UserID conf.Update)(string)  {
+	mc := memcache.New("127.0.0.1:11211")
 	var key string = strconv.Itoa(UserID.Message.From.ID)
 
 	val, _ := mc.Get(key)
@@ -436,7 +436,7 @@ func GetCommand(UserID conf.Update)(string)  {
 }
 
 func incOffest(UserID conf.Update,Command string) (int) {
-
+	mc := memcache.New("127.0.0.1:11211")
 	var key string = "tn_"+strconv.Itoa(UserID.Message.From.ID)+"_"+Command
 
 	val, _ := mc.Get(key)
@@ -452,7 +452,7 @@ func incOffest(UserID conf.Update,Command string) (int) {
 }
 
 func decOffset(UserID conf.Update,Command string) (int) {
-
+	mc := memcache.New("127.0.0.1:11211")
 	var key string = "tn_"+strconv.Itoa(UserID.Message.From.ID)+"_"+Command
 
 	val, _ := mc.Get(key)
@@ -468,6 +468,7 @@ func decOffset(UserID conf.Update,Command string) (int) {
 }
 
 func getOffset(UserID conf.Update,Command string) (int) {
+	mc := memcache.New("127.0.0.1:11211")
 	var key string = "tn_"+strconv.Itoa(UserID.Message.From.ID)+"_"+Command
 	val, _ := mc.Get(key)
 	var result int = 0
