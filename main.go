@@ -36,11 +36,11 @@ func init() {
 		panic(err.Error())
 	}
 
-	getNews(0,1)
 
 }
 
 func main() {
+	getNews(0,1)
 
 	http.HandleFunc("/", parseMessage)
 	http.ListenAndServe(":88", nil)
