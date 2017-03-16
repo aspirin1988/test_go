@@ -458,8 +458,8 @@ func getNews(offset int,count int)  {
 		var rubric string
 		err = res.Scan(&id,&header,&date,&rubric)
 		fmt.Println(id,header,date,rubric)
-		fmt.Println(unidecode.Unidecode(header))
-		result+="<a href='' >"+header+"</a>\n\n"
+		var url string = "https://tengrinews.kz/"+rubric+"/"+id+"/"
+		result+="<a href='"+url+"' >"+header+"</a>\n\n"
 	}
 	fmt.Println(result)
 }
