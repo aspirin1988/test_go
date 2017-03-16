@@ -343,7 +343,7 @@ func getMethod (Command string)func(update conf.Update){
 
 }
 
-func sendMessage(args map[string]interface{})  {
+func sendMessage1(args map[string]interface{})  {
 
 	start := int (time.Now().UnixNano())
 
@@ -375,13 +375,14 @@ func sendMessage(args map[string]interface{})  {
 
 }
 
-func sendMessage1(args map[string]interface{})  {
+func sendMessage(args map[string]interface{})  {
 	start := int (time.Now().UnixNano())
 
 	user := args["user"].(conf.Update)
 
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
+
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
 	form.Add("parse_mode", "html")
 
