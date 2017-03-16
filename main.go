@@ -492,7 +492,7 @@ func getNews(offset int,count int) (string)  {
 }
 func getNewsRubric(rubric string, offset int,count int) (string)  {
 
-	var sql string = "SELECT news.id,news.header,news.publish_date as `date`, rubrics.keyword FROM news LEFT JOIN rubrics ON news.rubric_ID=rubrics.id WHERE rubrics.keyword='"+rubric+"'  ORDER BY publish_date DESC LIMIT "+strconv.Itoa(count)+" OFFSET "+strconv.Itoa(offset)
+	var sql string = "SELECT news.id,news.header,news.publish_date as `date`, rubrics.keyword FROM news LEFT JOIN rubrics ON news.rubric_ID=rubrics.id WHERE news.rubric_id in (SELECT id FROM rubrics WHERE parent_id=(SELECT id FROM rubrics WHERE keyword='"+rubric+"'))  ORDER BY publish_date DESC LIMIT "+strconv.Itoa(count)+" OFFSET "+strconv.Itoa(offset)
 	fmt.Println(sql)
 	res, err :=db.Query(sql)
 	if err != nil {
