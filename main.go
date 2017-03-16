@@ -118,7 +118,8 @@ func getMethod (Command string)func(update conf.Update){
 	case "start":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
+			text:=getNews(0,1)
+			var args = map[string]interface{}{"user":update,"menu":"main_menu","text":text}
 			go sendMessage1(args)
 			fmt.Println("CurrentCommand:", Command)
 
@@ -382,7 +383,11 @@ func sendMessage1(args map[string]interface{})  {
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
 	form := url.Values{}
 	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
-	form.Add("text", user.Message.Text)
+	if args["menu"]==nil {
+		form.Add("text", user.Message.Text)
+	}else{
+		form.Add("text", args["menu"].(string))
+	}
 
 	if args["menu"]!=nil {
 		MenuName := args["menu"].(string)
@@ -442,14 +447,17 @@ func getMenu(MenuName string) conf.ReplyKeyboardMarkup  {
 	}
 }
 
-func getNews(offset int,count int)  {
+func getNews(offset int,count int) (string)  {
+
 	var sql string = "SELECT news.id,news.header,news.publish_date as `date`, rubrics.keyword FROM news LEFT JOIN rubrics ON news.rubric_ID=rubrics.id  ORDER BY publish_date DESC LIMIT "+strconv.Itoa(count)+" OFFSET "+strconv.Itoa(offset)
-	fmt.Println(sql)
+
 	res, err :=db.Query(sql)
 	if err != nil {
 		panic(err)
 	}
+
 	var result string
+
 	for res.Next() {
 		var id string
 		var header string
@@ -460,6 +468,6 @@ func getNews(offset int,count int)  {
 		var url string = "https://tengrinews.kz/"+rubric+"/"+id+"/"
 		result+="<a href='"+url+"' >"+header+"</a>\n\n"
 	}
-	fmt.Println(result)
+	return result
 }
 
