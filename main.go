@@ -123,8 +123,7 @@ func getMethod (Command string)func(update conf.Update){
 			var args = map[string]interface{}{"user":update,"menu":"main_menu","text":text}
 			go sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
-			offse := incOffest(update,Command)
-			fmt.Println(offse)
+
 
 		}
 		break
@@ -166,9 +165,11 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 
-			text:=getNews(0,1)
+			offset := incOffest(update,Command)
+			text:=getNews(offset,1)
 
 			var args = map[string]interface{}{"user":update,"menu":"news","text":text}
+
 			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -252,14 +253,34 @@ func getMethod (Command string)func(update conf.Update){
 
 	case "showMor":
 		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
+
+			LastCommand := GetCommand(update)
+
+			offset := incOffest(update,LastCommand)
+
+			text:=getNews(offset,1)
+
+			var args = map[string]interface{}{"user":update,"menu":"news","text":text}
+
+			sendMessage(args)
+
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
 
 	case "showPrev":
 		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
+
+			LastCommand := GetCommand(update)
+
+			offset := decOffset(update,LastCommand)
+
+			text:=getNews(offset,1)
+
+			var args = map[string]interface{}{"user":update,"menu":"news","text":text}
+
+			sendMessage(args)
+
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
