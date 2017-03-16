@@ -36,7 +36,7 @@ func init() {
 		panic(err.Error())
 	}
 
-	res, err :=db.Query("SELECT count(id) FROM News")
+	res, err :=db.Query("SELECT count(id) FROM news")
 	if err != nil {
 		panic(err)
 	}
