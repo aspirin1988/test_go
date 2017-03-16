@@ -12,6 +12,7 @@ import (
 	"bytes"
 	"time"
 	"database/sql"
+	"github.com/fiam/gounidecode/unidecode"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -457,6 +458,7 @@ func getNews(offset int,count int)  {
 		var rubric string
 		err = res.Scan(&id,&header,&date,&rubric)
 		fmt.Println(id,header,date,rubric)
+		fmt.Println(unidecode.Unidecode(header))
 		result+="<a href='' >"+header+"</a>\n\n"
 	}
 	fmt.Println(result)
