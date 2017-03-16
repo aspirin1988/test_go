@@ -91,12 +91,10 @@ func getMethod (Command string)func(update conf.Update){
 	switch Command {
 	case "start":
 		NewMethod = func(update conf.Update) {
-			fmt.Println(time.Now().Second())
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
 			go sendMessage1(args)
 			fmt.Println("CurrentCommand:", Command)
-			fmt.Println(time.Now().Second())
 
 		}
 		break
@@ -317,6 +315,8 @@ func getMethod (Command string)func(update conf.Update){
 
 func sendMessage(args map[string]interface{})  {
 
+	start := int (time.Now().UnixNano())
+
 	user := args["user"].(conf.Update)
 
 	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
@@ -339,9 +339,14 @@ func sendMessage(args map[string]interface{})  {
 	client := &http.Client{}
 	resp, _ := client.Do(req)
 	fmt.Println(resp.Status)
+
+	end := int (time.Now().UnixNano())
+	fmt.Println(end-start)
+
 }
 
 func sendMessage1(args map[string]interface{})  {
+	start := int (time.Now().UnixNano())
 
 	user := args["user"].(conf.Update)
 
@@ -365,6 +370,10 @@ func sendMessage1(args map[string]interface{})  {
 	client := &http.Client{}
 	resp, _ := client.Do(req)
 	fmt.Println(resp.Status)
+
+	end := int (time.Now().UnixNano())
+	fmt.Println(end-start)
+
 }
 
 func setCommand(UserID conf.Update, Command string)  {
