@@ -18,9 +18,12 @@ import (
 
 var db *sql.DB
 var err error
-
+var mc memcache.Client
 
 func init() {
+
+	&mc = memcache.New("127.0.0.1:11211")
+
 	db, err = sql.Open("mysql","tengrinews:vfzq2sE8hKzNqkkLyar6@/tengrinews")
 	if err != nil {
 		panic(err.Error())
@@ -120,8 +123,10 @@ func getMethod (Command string)func(update conf.Update){
 			setCommand(update, Command)
 			text:=getNews(0,1)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu","text":text}
-			go sendMessage1(args)
+			go sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
+			offse := incOffest(update,Command)
+			fmt.Println(offse)
 
 		}
 		break
@@ -162,7 +167,10 @@ func getMethod (Command string)func(update conf.Update){
 	case "news":
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"news"}
+
+			text:=getNews(0,1)
+
+			var args = map[string]interface{}{"user":update,"menu":"news","text":text}
 			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
@@ -414,14 +422,57 @@ func sendMessage(args map[string]interface{})  {
 }
 
 func setCommand(UserID conf.Update, Command string)  {
-	mc := memcache.New("127.0.0.1:11211")
-	mc.Set(&memcache.Item{Key:strconv.Itoa(UserID.Message.From.ID),Value:[]byte(Command)})
+	var key string = strconv.Itoa(UserID.Message.From.ID)
+	mc.Set(&memcache.Item{Key:key,Value:[]byte(Command)})
 }
 
 func GetCommand(UserID conf.Update)(string)  {
-	mc := memcache.New("127.0.0.1:11211")
-	val, _ := mc.Get(strconv.Itoa(UserID.Message.From.ID))
+	var key string = strconv.Itoa(UserID.Message.From.ID)
+
+	val, _ := mc.Get(key)
 	var result = string(val.Value)
+	return result
+}
+
+func incOffest(UserID conf.Update,Command string) (int) {
+
+	var key string = "tn_"+strconv.Itoa(UserID.Message.From.ID)+"_"+Command
+
+	val, _ := mc.Get(key)
+	var result = 0
+	if val!=nil{
+		result = int(val)
+		result++
+	}
+
+	return result
+
+
+}
+
+func decOffset(UserID conf.Update,Command string) (int) {
+
+	var key string = "tn_"+strconv.Itoa(UserID.Message.From.ID)+"_"+Command
+
+	val, _ := mc.Get(key)
+	var result = 0
+	if val!=nil{
+		result = int(val)
+		if result>0{
+			result--
+		}
+	}
+
+	return result
+}
+
+func getOffset(UserID conf.Update,Command string) (int) {
+	var key string = "tn_"+strconv.Itoa(UserID.Message.From.ID)+"_"+Command
+	val, _ := mc.Get(key)
+	var result int = 0
+	if val!=nil{
+		result=int(val)
+	}
 	return result
 }
 
