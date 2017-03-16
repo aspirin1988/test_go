@@ -12,9 +12,9 @@ import (
 	"bytes"
 	"time"
 	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 )
 
-import _ "github.com/go-sql-driver/mysql"
 
 var db *sql.DB
 var err error
@@ -36,15 +36,7 @@ func init() {
 		panic(err.Error())
 	}
 
-	res, err :=db.Query("SELECT count(id) FROM news")
-	if err != nil {
-		panic(err)
-	}
-	for res.Next() {
-		var count int
-		err = res.Scan(&count)
-		fmt.Println(count)
-	}
+	getNews(0,1)
 
 }
 
@@ -448,5 +440,22 @@ func getMenu(MenuName string) conf.ReplyKeyboardMarkup  {
 		ResizeKeyboard: true,
 		Keyboard:       keyboard,
 	}
+}
+
+func getNews(offset int,count int)  {
+	res, err :=db.Query("SELECT id,header,publish_date as `date` FROM news offset "+strconv.Itoa(offset)+" limit "+strconv.Itoa(count))
+	if err != nil {
+		panic(err)
+	}
+	var result string
+	for res.Next() {
+		var id string
+		var header string
+		var date string
+		err = res.Scan(&id,&header,&date)
+		fmt.Println(count,header,date)
+		result+="<a href='' >"+header+"</a>\n\n"
+	}
+	fmt.Println(result)
 }
 
