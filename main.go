@@ -175,69 +175,6 @@ func getMethod (Command string)func(update conf.Update){
 		}
 		break
 
-	case "economic":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
-	case "accidents":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
-	case "sports":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
-	case "tech":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
-	case "life":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
-	case "culture":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
-	case "articles":
-		NewMethod = func(update conf.Update) {
-			setCommand(update, Command)
-			var args = map[string]interface{}{"user":update,"menu":"single"}
-			sendMessage(args)
-			fmt.Println("CurrentCommand:", Command)
-		}
-		break
-
 	case "back":
 		NewMethod = func(update conf.Update) {
 			LastCommand := GetCommand(update)
@@ -360,8 +297,15 @@ func getMethod (Command string)func(update conf.Update){
 
 	default:
 		NewMethod = func(update conf.Update) {
-			var val= GetCommand(update)
-			fmt.Println("LastCommand:", val)
+			setCommand(update, Command)
+
+			offset := incOffest(update,Command)
+			text:=getNewsRubric(Command,offset,1)
+
+			var args = map[string]interface{}{"user":update,"menu":"news","text":text}
+
+			sendMessage(args)
+			fmt.Println("CurrentCommand:", Command)
 		}
 
 	}
@@ -526,6 +470,29 @@ func getMenu(MenuName string) conf.ReplyKeyboardMarkup  {
 func getNews(offset int,count int) (string)  {
 
 	var sql string = "SELECT news.id,news.header,news.publish_date as `date`, rubrics.keyword FROM news LEFT JOIN rubrics ON news.rubric_ID=rubrics.id  ORDER BY publish_date DESC LIMIT "+strconv.Itoa(count)+" OFFSET "+strconv.Itoa(offset)
+
+	res, err :=db.Query(sql)
+	if err != nil {
+		panic(err)
+	}
+
+	var result string
+
+	for res.Next() {
+		var id string
+		var header string
+		var date string
+		var rubric string
+		err = res.Scan(&id,&header,&date,&rubric)
+		fmt.Println(id,header,date,rubric)
+		var url string = "https://tengrinews.kz/"+rubric+"/"+id+"/"
+		result+="<a href='"+url+"' >"+header+"</a>\n\n"
+	}
+	return result
+}
+func getNewsRubric(rubric string, offset int,count int) (string)  {
+
+	var sql string = "SELECT news.id,news.header,news.publish_date as `date`, rubrics.keyword FROM news LEFT JOIN rubrics ON news.rubric_ID=rubrics.id WHERE rubrics.keyword="+rubric+"  ORDER BY publish_date DESC LIMIT "+strconv.Itoa(count)+" OFFSET "+strconv.Itoa(offset)
 
 	res, err :=db.Query(sql)
 	if err != nil {
