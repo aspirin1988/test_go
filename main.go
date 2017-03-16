@@ -12,7 +12,6 @@ import (
 	"bytes"
 	"time"
 	"database/sql"
-	"github.com/fiam/gounidecode/unidecode"
 	_ "github.com/go-sql-driver/mysql"
 )
 
