@@ -40,9 +40,11 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	//for res.Next() {
-		println(res)
-	//}
+	for res.Next() {
+		var count int
+		err = res.Scan(&count)
+		fmt.Println(count)
+	}
 
 }
 
