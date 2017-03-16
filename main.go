@@ -92,7 +92,7 @@ func getMethod (Command string)func(update conf.Update){
 		NewMethod = func(update conf.Update) {
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
-			go sendMessage(args)
+			go sendMessage1(args)
 			fmt.Println("CurrentCommand:", Command)
 		}
 		break
@@ -328,6 +328,32 @@ func sendMessage(args map[string]interface{})  {
 
 
 	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Body.Close()
+
+	//Отправка сообщения
+	client := &http.Client{}
+	resp, _ := client.Do(req)
+	fmt.Println(resp.Status)
+}
+
+func sendMessage1(args map[string]interface{})  {
+
+	user := args["user"].(conf.Update)
+
+	method := fmt.Sprintf(conf.APIEndpoint, conf.BOT_TOKEN, "sendMessage")
+	form := url.Values{}
+	form.Add("chat_id", strconv.Itoa(user.Message.From.ID))
+	form.Add("text", user.Message.Text)
+
+	if args["menu"]!=nil {
+		MenuName := args["menu"].(string)
+		menu, _ := json.Marshal(getMenu(MenuName))
+		form.Add("reply_markup", string(menu) )
+	}
+
+
+	req, _ := http.NewRequest("GET", method ,  bytes.NewBufferString(form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Body.Close()
 
