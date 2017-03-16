@@ -455,7 +455,7 @@ func getNews(offset int,count int)  {
 		var header string
 		var date string
 		err = res.Scan(&id,&header,&date)
-		fmt.Println(count,header,date)
+		fmt.Println(id,header,date)
 		result+="<a href='' >"+header+"</a>\n\n"
 	}
 	fmt.Println(result)
