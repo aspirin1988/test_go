@@ -11,8 +11,14 @@ import (
 	"net/url"
 	"bytes"
 	"time"
+	"database/sql"
 )
 
+var db *sql.DB
+
+func init() {
+	db, _ = sql.Open("mysql","tengrinews:vfzq2sE8hKzNqkkLyar6@/tengrinews")
+}
 
 func main() {
 
@@ -94,6 +100,13 @@ func getMethod (Command string)func(update conf.Update){
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
 			go sendMessage1(args)
+			res, err :=db.Query("SELECT count(id) FROM News")
+			if err != nil {
+				panic(err)
+			}
+			for res.Next() {
+				println(res)
+			}
 			fmt.Println("CurrentCommand:", Command)
 
 		}
