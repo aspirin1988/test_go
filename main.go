@@ -28,13 +28,13 @@ func init() {
 		fmt.Println("OK!")
 	}
 	// sql.DB should be long lived "defer" closes it once this function ends
-	defer db.Close()
+	//defer db.Close()
 
 	// Test the connection to the database
-	err = db.Ping()
-	if err != nil {
-		panic(err.Error())
-	}
+	//err = db.Ping()
+	//if err != nil {
+	//	panic(err.Error())
+	//}
 
 
 }
