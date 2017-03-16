@@ -91,12 +91,12 @@ func getMethod (Command string)func(update conf.Update){
 	switch Command {
 	case "start":
 		NewMethod = func(update conf.Update) {
-			fmt.Println(int(time.Now()))
+			fmt.Println(time.Now().Second())
 			setCommand(update, Command)
 			var args = map[string]interface{}{"user":update,"menu":"main_menu"}
 			go sendMessage1(args)
 			fmt.Println("CurrentCommand:", Command)
-			fmt.Println(int(time.Now()))
+			fmt.Println(time.Now().Second())
 
 		}
 		break
