@@ -442,7 +442,7 @@ func incOffest(UserID conf.Update,Command string) (int) {
 	val, _ := mc.Get(key)
 	var result = 0
 	if val!=nil{
-		result = int(binary.BigEndian.Uint64(val.Value))
+		result,_ = strconv.Atoi(string(val.Value))
 		result++
 	}
 	mc.Set(&memcache.Item{Key:key,Value:[]byte(result)})
@@ -458,7 +458,7 @@ func decOffset(UserID conf.Update,Command string) (int) {
 	val, _ := mc.Get(key)
 	var result = 0
 	if val!=nil{
-		result = int(binary.BigEndian.Uint64(val.Value))
+		result,_ = strconv.Atoi(string(val.Value))
 		if result>0{
 			result--
 		}
@@ -473,7 +473,7 @@ func getOffset(UserID conf.Update,Command string) (int) {
 	val, _ := mc.Get(key)
 	var result int = 0
 	if val!=nil{
-		result=int(binary.BigEndian.Uint64(val.Value))
+		result,_ = strconv.Atoi(string(val.Value))
 	}
 	return result
 }
