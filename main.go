@@ -334,7 +334,7 @@ func sendMessage(args map[string]interface{})  {
 	}
 
 
-	req, _ := http.NewRequest("POST", method ,  bytes.NewBufferString(form.Encode()))
+	req, _ := http.NewRequest("GET", method ,  bytes.NewBufferString(form.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	req.Body.Close()
 
