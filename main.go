@@ -13,6 +13,7 @@ import (
 	"time"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"encoding/binary"
 )
 
 
@@ -441,7 +442,7 @@ func incOffest(UserID conf.Update,Command string) (int) {
 	val, _ := mc.Get(key)
 	var result = 0
 	if val!=nil{
-		result = int(val.Value)
+		result = int(binary.BigEndian.Uint64(val.Value))
 		result++
 	}
 	mc.Set(&memcache.Item{Key:key,Value:[]byte(result)})
@@ -457,7 +458,7 @@ func decOffset(UserID conf.Update,Command string) (int) {
 	val, _ := mc.Get(key)
 	var result = 0
 	if val!=nil{
-		result = int(val.Value)
+		result = int(binary.BigEndian.Uint64(val.Value))
 		if result>0{
 			result--
 		}
@@ -471,7 +472,7 @@ func getOffset(UserID conf.Update,Command string) (int) {
 	val, _ := mc.Get(key)
 	var result int = 0
 	if val!=nil{
-		result=int(val.Value)
+		result=int(binary.BigEndian.Uint64(val.Value))
 	}
 	return result
 }
