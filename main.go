@@ -14,10 +14,25 @@ import (
 	"database/sql"
 )
 
+import _ "github.com/go-sql-driver/mysql"
+
 var db *sql.DB
+var err error
+
 
 func init() {
-	db, _ = sql.Open("mysql","tengrinews:vfzq2sE8hKzNqkkLyar6@/tengrinews")
+	db, err = sql.Open("mysql","tengrinews:vfzq2sE8hKzNqkkLyar6@/tengrinews")
+	if err != nil {
+		panic(err.Error())
+	}
+	// sql.DB should be long lived "defer" closes it once this function ends
+	defer db.Close()
+
+	// Test the connection to the database
+	err = db.Ping()
+	if err != nil {
+		panic(err.Error())
+	}
 }
 
 func main() {
