@@ -302,7 +302,7 @@ func getMethod (Command string)func(update conf.Update){
 			offset := incOffest(update,Command)
 			text:=getNewsRubric(Command,offset,1)
 
-			var args = map[string]interface{}{"user":update,"menu":"news","text":text}
+			var args = map[string]interface{}{"user":update,"menu":"single","text":text}
 
 			sendMessage(args)
 			fmt.Println("CurrentCommand:", Command)
